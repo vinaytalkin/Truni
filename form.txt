@@ -1,0 +1,130 @@
+from datetime import timezone
+
+import material
+from django import forms
+from material import Layout, Row, Fieldset
+
+from center.models import Registration, UserImagesUpload
+from datetime import timedelta
+
+# class RegistrationForm(forms.Form):
+#     username = forms.CharField()
+#     email = forms.EmailField(label="Email Address")
+#     password = forms.CharField(widget=forms.PasswordInput)
+#     password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm password")
+#     first_name = forms.CharField(required=False)
+#     last_name = forms.CharField(required=False)
+#     gender = forms.ChoiceField(choices=((None, ''), ('F', 'Female'), ('M', 'Male'), ('O', 'Other')),required=False)
+#     receive_news = forms.BooleanField(required=False, label='I want to receive news and special offers')
+#     agree_toc = forms.BooleanField(required=True, label='I agree with the Terms and Conditions')
+#
+#     layout = Layout('username', 'email',
+#                         Row('password', 'password_confirm'),
+#                         Fieldset('Personal details',
+#                                  Row('first_name', 'last_name'),
+#                                  'gender',
+#                                  'receive_news', 'agree_toc'))
+
+
+class Registration_model(forms.Form):
+    # photoimage = models.FileField(blank=True, null=True)
+    user_id = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput)
+    password_confirm = forms.CharField(widget=forms.PasswordInput, label="Confirm password")
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
+    gender = forms.ChoiceField(choices=(('F', 'Female'), ('M', 'Male'), ('O', 'Other')),required=False,widget=forms.RadioSelect)
+    email_id = forms.EmailField(max_length=250)
+    father_name = forms.CharField(max_length=100)
+    joining_date  = forms.DateField( required=False)
+    dob = forms.DateField()
+    spouse_name  = forms.CharField(max_length=100)
+    current_residency_address  = forms.CharField(max_length=100)
+    current_zip_code  = forms.CharField(max_length=20)
+    current_state  = forms.CharField(max_length=100)
+    current_country  = forms.CharField(max_length=100)
+    permanent_address  = forms.CharField(max_length=100)
+    permanent_zip_code  = forms.CharField(max_length=20)
+    permanent_state  = forms.CharField(max_length=100)
+    permanent_country  = forms.CharField(max_length=100)
+    personal_contact_no  = forms.IntegerField()
+    emergency_contact_no  = forms.IntegerField()
+    highest_education  = forms.CharField(max_length=250)
+    educational_institute_name  = forms.CharField(max_length=250)
+    year_of_passing  = forms.DateField()
+    previous_employee_name  = forms.CharField(max_length=250)
+    previous_empoyee_from  = forms.DateField()
+    previous_empoyee_to  = forms.DateField()
+    # photoidproofimage = forms.FileField(blank=True, null=True)
+    pan_no  = forms.CharField(max_length=250)
+    banke_details_for_salary  = forms.CharField(max_length=100)
+    active_user  = forms.BooleanField()
+    employee_info  = forms.ChoiceField(choices=(('F', 'Full Time'), ('P', 'Part Time'), ('O', 'Other')),required=False,widget=forms.RadioSelect)
+    agreeterms = forms.BooleanField(required=True, label='I agree with the Terms and Conditions')
+
+    layout = Layout(
+                    Row('user_id', 'email_id',),
+                    Row('password', 'password_confirm'),
+                    Fieldset('Personal details',
+                             Row('first_name', 'last_name'),
+                             Row('father_name','spouse_name'),
+                             Row('joining_date', 'dob'),
+                             Row('personal_contact_no', 'emergency_contact_no'),
+                             Row('current_residency_address', 'current_zip_code','current_state','current_country'),
+                             Row('permanent_address', 'permanent_zip_code', 'permanent_state', 'permanent_country'),
+                             Row('highest_education', 'educational_institute_name','year_of_passing'),
+                             Row('previous_employee_name', 'previous_empoyee_from','previous_empoyee_to'),
+                             'gender','pan_no','banke_details_for_salary','employee_info',
+                             'active_user', 'agreeterms'))
+
+
+class Registration_model1(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = Registration
+        fields = '__all__'
+
+
+class UserImages_Form(forms.ModelForm):
+    class Meta:
+        model = UserImagesUpload
+        fields = '__all__'
+
+
+
+
+
+
+def Registration_view(request):
+    mess = ''
+    form = Registration_model()
+    if request.method == 'POST':
+        data= request.POST
+        pdb.set_trace()
+        user = Registration(user_id=data.get('user_id'),password=data.get('password'),first_name=data.get('first_name'),
+                                last_name=data.get('last_name'),gender=data.get('gender'), email_id=data.get('gender'),
+                                father_name=data.get('father_name'),joining_date=data.get('joining_date'),dob=data.get('dob'),
+                                spouse_name=data.get('spouse_name'),current_residency_address=data.get('current_residency_address'),
+                                current_zip_code=data.get('current_zip_code'),current_state=data.get('current_state'),
+                                current_country=data.get('current_country'),permanent_address=data.get('permanent_address'),
+                                permanent_zip_code=data.get('permanent_zip_code'),permanent_state=data.get('permanent_state'),
+                                permanent_country=data.get('permanent_country'),personal_contact_no=data.get('personal_contact_no'),
+                                emergency_contact_no=data.get('emergency_contact_no'),highest_education=data.get('highest_education'),
+                                educational_institute_name=data.get('educational_institute_name'),year_of_passing=data.get('year_of_passing'),
+                                previous_employee_name=data.get('previous_employee_name'),previous_empoyee_from=data.get('previous_empoyee_from'),
+                                previous_empoyee_to=data.get('previous_empoyee_to'),pan_no=data.get('pan_no'),banke_details_for_salary=
+                                data.get('banke_details_for_salary'),active_user=data.get('active_user'),employee_info=data.get('employee_info'),
+                                agreeterms=data.get('agreeterms'))
+
+    try:
+
+        user.save()
+        # to encrypt the password
+        msg="user created successfully"
+    except Exception as err:
+        msg = str(err)
+
+
+
+    return render(request,'center/RegistrationForm.html',{'form':form}) #RegistrationForm

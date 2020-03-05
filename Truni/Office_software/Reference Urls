@@ -1,0 +1,20 @@
+ ///  forgot password page //
+https://github.com/studygyaan/Django-CRM-Project/tree/master/templates/common
+https://www.youtube.com/watch?v=yziq0xd6wgw&list=PLSPMgrv4IuJ4WLURdlzKNx4sgsyqW8d5q&index=10&t=0s
+https://codingwithmitch.com/courses/building-a-website-django-python/
+https://gist.github.com/mitchtabian/6b6a650b4b809ca2f40295e5fe7a40e7
+
+
+settings.ini
+[settings]
+EMAIL_HOST_USER=mitchelltabian@gmail.com
+EMAIL_HOST_PASSWORD=your_app_password_here
+
+settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mitchelltabian@gmail.com'
+EMAIL_HOST_PASSWORD = 'your_app_password_here'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'CodingWithMitch Team <noreply@codingwithmitch.com>'
