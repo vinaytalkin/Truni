@@ -84,7 +84,7 @@ def signin_view(request):
             login(request, user)
             msg = "authenticated"
         else:
-            msg = "print unable to login"
+            msg = "print unable to logins"
             return redirect('/')
 
     return render(request, 'center/signin.html', {"message": msg})
